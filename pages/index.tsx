@@ -1,3 +1,9 @@
+import Layout from "../components/layout";
+
 export default function Home() {
-  return <div className="h-screen bg-slate-200">Holocup</div>;
+  return (
+    <Layout>
+      <div>1</div>
+    </Layout>
+  );
 }
