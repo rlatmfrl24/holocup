@@ -7,8 +7,7 @@ export default function Home() {
     <Layout>
       <div className="flex flex-1 relative m-3">
         <Image
-          className="bg-slate-400"
-          src={`/images/mai_n.png`}
+          src={`/images/main.png`}
           alt="hololive"
           fill
           style={{ objectFit: "contain" }}

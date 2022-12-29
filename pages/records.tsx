@@ -1,6 +1,6 @@
 import Layout from "../components/layout";
 
-const RulePage = () => {
+const RecordPage = () => {
   return (
     <Layout>
       <div>Rules</div>
@@ -8,4 +8,4 @@ const RulePage = () => {
   );
 };
 
-export default RulePage;
+export default RecordPage;

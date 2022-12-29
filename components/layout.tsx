@@ -35,7 +35,7 @@ const SideMenu: React.FC = () => {
 
   const menus: MenuType[] = [
     { title: "대회 정보", link: "/info" },
-    { title: "대회 규칙", link: "/rules" },
+    { title: "역대 기록", link: "/records" },
     { title: "참가자 정보", link: "/participants" },
     { title: "승부 예측", link: "/prediction" },
     { title: "버그 제보", link: "/bug" },
