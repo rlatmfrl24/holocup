@@ -1,50 +1,90 @@
 import Layout from "../components/layout";
-import Image from "next/image";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { wrap } from "popmotion";
 
 const InfoPage = () => {
+  const imgList = [
+    "/images/infos/info_japanese.jfif",
+    "/images/infos/info_english.jfif",
+    "/images/infos/rules_korean.webp",
+    "/images/infos/entry.png",
+  ];
+  const [[page, direction], setPage] = useState([0, 0]);
+  const imageIndex = wrap(0, imgList.length, page);
+  const paginate = (newDirection: number) => {
+    setPage([page + newDirection, newDirection]);
+  };
+  const InfoBox = () => {
+    const swipeConfidenceThreshold = 10000;
+    const swipePower = (offset: number, velocity: number) => {
+      return Math.abs(offset) * velocity;
+    };
+
+    const variants = {
+      enter: (direction: number) => {
+        return {
+          x: direction > 0 ? 1000 : -1000,
+          opacity: 0,
+        };
+      },
+      center: {
+        zIndex: 1,
+        x: 0,
+        opacity: 1,
+      },
+      exit: (direction: number) => {
+        return {
+          zIndex: 0,
+          x: direction < 0 ? 1000 : -1000,
+          opacity: 0,
+        };
+      },
+    };
+
+    return (
+      <AnimatePresence custom={direction}>
+        <motion.img
+          className="w-full h-full object-contain"
+          key={page}
+          src={imgList[imageIndex]}
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.2 },
+          }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={1}
+          onDragEnd={(e, { offset, velocity }) => {
+            const swipe = swipePower(offset.x, velocity.x);
+            if (swipe < -swipeConfidenceThreshold) {
+              paginate(1);
+            } else if (swipe > swipeConfidenceThreshold) {
+              paginate(-1);
+            }
+          }}
+        />
+      </AnimatePresence>
+    );
+  };
+
   return (
     <Layout>
-      <div className="flex-1 bg-slate-200 p-3 gap-3 grid grid-cols-3 font-noto_kr">
-        <div className="flex col-span-2 bg-slate-100 flex-col gap-5 items-center justify-center p-3 shadow rounded">
-          <Image
-            src="/images/Logo.png"
-            alt="hololive"
-            width={240}
-            height={240}
-          />
-          <div className="font-semibold text-3xl">홀로라이브 정월컵 2023</div>
-          <span className="text-xl font-bold">2023년 1월 7일 오후 2시</span>
-          <div className="flex gap-3">
-            <div className="rounded shadow-md flex-1 flex flex-col text-center p-4">
-              <span className="font-bold mb-3">참가 인원</span>
-              <span className="flex flex-1 justify-center items-center text-6xl font-bold">
-                36
-              </span>
-            </div>
-            <div className="rounded shadow-md flex-1 flex flex-col text-center p-4">
-              <span className="font-bold mb-3">경기 종목</span>
-              <Image
-                className="flex-1"
-                src="/images/logo-mk8.png"
-                alt="mk8"
-                width={240}
-                height={240}
-                style={{ objectFit: "contain" }}
-              />
-            </div>
-            <div className="rounded shadow-md flex-1 flex flex-col items-center text-center p-4">
-              <span className="font-bold mb-3">대회 주관</span>
-              <Image
-                className="flex-1"
-                src="/images/towa.png"
-                alt="mk8"
-                width={120}
-                height={120}
-              />
-            </div>
-          </div>
+      <div className="p-3 gap-3 font-noto_kr flex-1 flex overflow-x-hidden">
+        <button onClick={() => paginate(-1)}>
+          <span className="material-symbols-outlined">arrow_back_ios</span>
+        </button>
+        <div className="flex-1">
+          <InfoBox />
         </div>
-        <div className="bg-slate-100 rounded shadow">Time Table</div>
+        <button onClick={() => paginate(1)}>
+          <span className="material-symbols-outlined">arrow_forward_ios</span>
+        </button>
       </div>
     </Layout>
   );
