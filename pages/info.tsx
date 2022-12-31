@@ -2,6 +2,7 @@ import Layout from "../components/layout";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { wrap } from "popmotion";
+import Image from "next/image";
 
 const InfoPage = () => {
   const imgList = [
@@ -44,10 +45,9 @@ const InfoPage = () => {
 
     return (
       <AnimatePresence custom={direction}>
-        <motion.img
-          className="w-full h-full flex-shrink-0"
+        <motion.div
+          className="w-full h-full flex-1 flex"
           key={page}
-          src={imgList[imageIndex]}
           custom={direction}
           variants={variants}
           initial="enter"
@@ -68,7 +68,16 @@ const InfoPage = () => {
               paginate(-1);
             }
           }}
-        />
+        >
+          <Image
+            className="flex-1"
+            alt="info"
+            src={imgList[imageIndex]}
+            fill
+            style={{ objectFit: "contain" }}
+            draggable={false}
+          />
+        </motion.div>
       </AnimatePresence>
     );
   };
@@ -79,7 +88,7 @@ const InfoPage = () => {
         <button onClick={() => paginate(-1)}>
           <span className="material-symbols-outlined">arrow_back_ios</span>
         </button>
-        <div className="flex relative">
+        <div className="flex relative flex-1">
           <InfoBox />
         </div>
         <button onClick={() => paginate(1)}>
