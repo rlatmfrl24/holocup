@@ -45,7 +45,7 @@ const InfoPage = () => {
     return (
       <AnimatePresence custom={direction}>
         <motion.img
-          className="w-full h-full object-contain"
+          className="w-full h-full flex-shrink-0"
           key={page}
           src={imgList[imageIndex]}
           custom={direction}
@@ -79,7 +79,7 @@ const InfoPage = () => {
         <button onClick={() => paginate(-1)}>
           <span className="material-symbols-outlined">arrow_back_ios</span>
         </button>
-        <div className="flex-1">
+        <div className="flex relative">
           <InfoBox />
         </div>
         <button onClick={() => paginate(1)}>
