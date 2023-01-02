@@ -1,8 +1,38 @@
 import Layout from "../components/layout";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { wrap } from "popmotion";
 import Image from "next/image";
+
+const Rules = () => {
+  return (
+    <div className="flex-1 flex flex-col shadow rounded p-3">
+      <div className="font-bold text-2xl font-noto_kr">기본 규칙</div>
+      <div className="font-noto_kr flex-1 justify-center flex items-center">
+        <div className="flex flex-col flex-1 gap-3">
+          <div className="flex flex-col gap-5">
+            <div>1) 그룹별 참가자는 24명으로 구성됩니다.</div>
+            <div>
+              2) 각 그룹별 6번의 레이스를 진행하며, 각 레이스별 점수를 합산하여
+              그룹별 순위를 결정합니다.
+            </div>
+            <div>
+              3) 그룹별 상위 4명은 츠요컵에 진출하며, 하위 4명은 자코컵으로
+              진출합니다.
+            </div>
+            <div>
+              4) 츠요컵은 6번의 레이스를 진행하며, 각 레이스별 점수를 합산하여
+              최종 순위를 결정합니다.
+            </div>
+            <div>
+              5) 자코컵도 6번의 레이스를 진행하며, 각 레이스별 점수를 합산하여
+              최종 순위를 결정합니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const InfoPage = () => {
   const imgList = [
@@ -11,9 +41,34 @@ const InfoPage = () => {
     "/images/infos/rules_korean.webp",
     "/images/infos/entry.png",
   ];
+
+  let PageList: ReactNode[] = imgList.map((img, index) => {
+    return (
+      <Image
+        key={index}
+        className="flex-1"
+        alt="info"
+        src={imgList[index]}
+        fill
+        style={{ objectFit: "contain" }}
+        draggable={false}
+      />
+    );
+  });
+
+  PageList = [...PageList, <Rules key={PageList.length} />];
+
   const [[page, direction], setPage] = useState([0, 0]);
-  const imageIndex = wrap(0, imgList.length, page);
   const paginate = (newDirection: number) => {
+    if (page === 0 && newDirection === -1) {
+      setPage([PageList.length - 1, newDirection]);
+      return;
+    }
+    if (page === PageList.length - 1 && newDirection === 1) {
+      setPage([0, newDirection]);
+      return;
+    }
+
     setPage([page + newDirection, newDirection]);
   };
   const InfoBox = () => {
@@ -69,14 +124,7 @@ const InfoPage = () => {
             }
           }}
         >
-          <Image
-            className="flex-1"
-            alt="info"
-            src={imgList[imageIndex]}
-            fill
-            style={{ objectFit: "contain" }}
-            draggable={false}
-          />
+          {PageList[page]}
         </motion.div>
       </AnimatePresence>
     );
