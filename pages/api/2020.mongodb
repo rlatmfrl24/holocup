@@ -1,0 +1,105 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('holocup');
+
+
+
+db.getCollection('competitions').insertOne({
+    code: 'en_id_tournament_2021',
+    name: '홀로라이브 EN & ID Tournament 2021',
+    all_star_cup: [
+        {
+            code: 'ninomae_inanis',
+            name_kr: '니노마에 이나니스',
+            rank: 1,
+            point: 54
+            race_results: [
+                2,2,1,1
+            ]
+        }, {
+            code: 'irys',
+            name_kr: '아이리스',
+            rank: 2,
+            point: 46,
+            race_results: [
+                6,1,2,2
+            ]
+        }, {
+            code: 'pavolia_reine',
+            name_kr: '파볼리아 레이네',
+            rank: 3,
+            point: 33
+            race_results: [
+                1,5,8,8
+            ]
+        }, {
+            code: 'takanashi_kiara',
+            name_kr: '타카나시 키아라',
+            rank: 3,
+            race_results: [
+                4,3,7,5
+            ]
+        }, {
+            code: 'gawr_gura',
+            name_kr: '가우르 구라',
+            rank: 5,
+            race_results: [
+                5,4,4,7
+            ]
+        }, {
+            code: 'mori_calliope',
+            name_kr: '모리 칼리오페',
+            rank: 6,
+            race_results: [
+                3,10,5,3
+            ]
+        }, {
+            code: 'kureiji_ollie',
+            name_kr: '쿠레이지 올리',
+            rank: 6,
+            race_results: [
+                8,6,3,4
+            ]
+        }, {
+            code: 'watson_amelia',
+            name_kr: '아멜리아 왓슨',
+            rank: 8,
+            race_results: [
+                7,8,10,9
+            ]
+        }, {
+            code: 'anya_melfissa',
+            name_kr: '아냐 멜핏사',
+            rank: 9,
+            race_results: [
+                5,9,6,10
+            ]
+        }, {
+            code: 'ayunda_risu',
+            name_kr: '아윤다 리스',
+            rank: 10,
+            race_results: [
+                9,7,7,11
+            ]
+        }, {
+            code: 'moona_hoshinova',
+            name_kr: '무나 호시노바',
+            rank: 11,
+            race_results: [
+                10,11,11,6
+            ]
+        }, {
+            code:'airani_iofifteen',
+            name_kr: '아이라니 아이오피틴',
+            rank: 12,
+            race_results: [
+                12,12,12,12
+            ]
+        }
+    ]
+})
+
