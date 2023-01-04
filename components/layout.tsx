@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Header: NextPage = () => {
   return (
-    <div className="bg-third-600 text-secondary p-3 items-center flex gap-3 font-poppins font-semibold fixed w-full">
+    <div className="bg-third-600 text-secondary p-3 items-center flex gap-3 font-poppins font-semibold fixed w-full z-30">
       <button>
         <span className="material-symbols-outlined text-3xl hover:bg-third-500 p-2 rounded-full h-10 w-10 flex justify-center items-center">
           menu

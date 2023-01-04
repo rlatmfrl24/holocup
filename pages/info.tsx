@@ -5,9 +5,9 @@ import Image from "next/image";
 
 const Rules = () => {
   return (
-    <div className="flex-1 flex flex-col shadow rounded p-3">
-      <div className="font-bold text-2xl font-noto_kr">기본 규칙</div>
-      <div className="font-noto_kr flex-1 justify-center flex items-center">
+    <div className="flex-1 flex flex-col px-48 justify-center">
+      <div className="font-bold text-2xl font-noto_kr mb-11">기본 규칙</div>
+      <div className="font-noto_kr justify-center flex items-center">
         <div className="flex flex-col flex-1 gap-3">
           <div className="flex flex-col gap-5">
             <div>1) 그룹별 참가자는 24명으로 구성됩니다.</div>

@@ -37,7 +37,7 @@ const ParticipantsPage = () => {
     return (
       <Link href={`/entry/${entryName}`}>
         <motion.div className="hover:outline rounded">
-          <Image src={src} alt={alt} width={120} height={120} />
+          <Image src={src} alt={alt} width={240} height={240} />
         </motion.div>
       </Link>
     );
@@ -67,7 +67,7 @@ const ParticipantsPage = () => {
     "nakiri_ayame",
     "tsunomaki_watame",
     "himemori_luna",
-    "yukihana_ramy",
+    "yukihana_lamy",
     "gawr_gura",
     "kobo_kanaeru",
     "kaela_kovalskia",
