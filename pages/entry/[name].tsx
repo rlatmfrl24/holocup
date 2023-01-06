@@ -130,8 +130,16 @@ const EntryPage: NextPage<{ data: Data }> = ({ data }) => {
       >
         <Link className="w-fit" href={"/participants"}>
           <button className="p-3 flex items-center gap-2 font-bold font-noto_kr hover:bg-gray-200 rounded">
-            <span className="material-symbols-outlined">arrow_back</span>뒤로
-            가기
+            <Image
+              className="w-8 h-8"
+              alt="info"
+              width={20}
+              height={20}
+              src="/icons/arrow_back.svg"
+              style={{ objectFit: "contain" }}
+              draggable={false}
+            />
+            뒤로 가기
           </button>
         </Link>
         <div className="flex gap-4">
@@ -151,7 +159,15 @@ const EntryPage: NextPage<{ data: Data }> = ({ data }) => {
               <div className="flex justify-center gap-2 w-60">
                 <h1 className="font-noto_kr font-bold text-2xl flex items-center ">
                   랭킹 포인트
-                  <span className="material-symbols-outlined">help</span>
+                  <Image
+                    className="w-6 h-6"
+                    alt="info"
+                    width={20}
+                    height={20}
+                    src="/icons/help.svg"
+                    style={{ objectFit: "contain" }}
+                    draggable={false}
+                  />
                 </h1>
                 <p className="font-poppins text-3xl font-bold flex-1 flex items-center">
                   {calculateRankingPoint(data.entry)}
