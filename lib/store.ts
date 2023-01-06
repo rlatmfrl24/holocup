@@ -1,3 +1,7 @@
+import { Long, Timestamp } from "mongodb";
+import { atom } from "recoil";
+import { PredictionData } from "./typeDef";
+
 const group_a = [
   "natsuiro_matsuri",
   "nekomata_okayu",
@@ -43,4 +47,21 @@ const group_c = [
   "vestia_zeta",
 ];
 
-export { group_a, group_b, group_c };
+const newPredictionState = atom<PredictionData>({
+  key: "newPredictionState",
+  default: {
+    nickname: "",
+    password: "",
+    championshipPrediction: [],
+    jakoPrediction: [],
+    winner: "",
+    runnerUp: "",
+    thirdPlace: "",
+    jako_winner: "",
+    jako: "",
+    createTimestamp: new Date(),
+    modifyTimestamp: new Date(),
+  },
+});
+
+export { group_a, group_b, group_c, newPredictionState };

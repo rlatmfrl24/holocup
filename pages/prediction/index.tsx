@@ -1,11 +1,18 @@
 import next, { NextPage } from "next";
 import Layout from "../../components/layout";
-import { group_a, group_b, group_c } from "../../lib/store";
+import { group_a, group_b, group_c, newPredictionState } from "../../lib/store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const PredictionPage: NextPage = () => {
+  const [predictionData, setPredictionData] =
+    useRecoilState(newPredictionState);
+
   const [currentPage, setCurrentPage] = useState(0);
+  const router = useRouter();
 
   const [GroupChampPrediction, setGroupChampPrediction] = useState<{
     [key: string]: string[];
@@ -34,9 +41,27 @@ const PredictionPage: NextPage = () => {
   });
 
   useEffect(() => {
-    console.log(GroupChampPrediction);
-    console.log(GroupJakoPrediction);
-  }, [GroupChampPrediction, GroupJakoPrediction]);
+    if (currentPage === 3) {
+      setPredictionData({
+        ...predictionData,
+        championshipPrediction: [
+          GroupChampPrediction.group_a,
+          GroupChampPrediction.group_b,
+          GroupChampPrediction.group_c,
+        ].flat(),
+        jakoPrediction: [
+          GroupJakoPrediction.group_a,
+          GroupJakoPrediction.group_b,
+          GroupJakoPrediction.group_c,
+        ].flat(),
+        jako: finalPrediction.jako,
+        jako_winner: finalPrediction.jako_winner,
+        thirdPlace: finalPrediction.third,
+        runnerUp: finalPrediction.runnerup,
+        winner: finalPrediction.champion,
+      });
+    }
+  }, [GroupChampPrediction, GroupJakoPrediction, finalPrediction]);
 
   function nextPage(doSomething: Function) {
     if (doSomething()) {
@@ -58,6 +83,8 @@ const PredictionPage: NextPage = () => {
         return <ChampionShipPredictionPage />;
       case 3:
         return <JakoRoundPredictionPage />;
+      case 4:
+        return <PredictionCompletePage />;
       default:
         break;
     }
@@ -536,7 +563,7 @@ const PredictionPage: NextPage = () => {
           </div>
 
           <NextPageButton
-            doSomething={() => {
+            doSomething={async () => {
               if (winner === "" || jako === "") {
                 alert("자코컵 예측을 완료해주세요.");
                 return false;
@@ -550,6 +577,27 @@ const PredictionPage: NextPage = () => {
                     jako_winner: winner,
                     jako: jako,
                   });
+
+                  const reqBody = JSON.stringify({
+                    ...predictionData,
+                    jako_winner: winner,
+                    jako: jako,
+                  });
+                  console.log(reqBody);
+
+                  await fetch("/api/prediction", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      ...predictionData,
+                      jako_winner: winner,
+                      jako: jako,
+                    }),
+                  });
+
+                  return true;
                 }
               }
 
@@ -648,6 +696,35 @@ const PredictionPage: NextPage = () => {
             </button>
           </div>
         </div>
+      </div>
+    );
+  };
+
+  const PredictionCompletePage: NextPage = () => {
+    return (
+      <div className="flex-1 flex flex-col font-noto_kr text-2xl">
+        <p>예측 완료!</p>
+        <p>로그인하셔서 예측 결과를 확인해보세요!</p>
+        <Link href="/login">
+          <button
+            className="              
+            bg-slate-100
+              text-slate-500
+              font-bold
+              py-2
+              px-4
+              rounded
+              border-2
+              border-slate-500
+              hover:bg-slate-200
+              hover:text-slate-600
+              focus:outline-none
+              focus:shadow-outline 
+          "
+          >
+            로그인 페이지로 이동
+          </button>
+        </Link>
       </div>
     );
   };
