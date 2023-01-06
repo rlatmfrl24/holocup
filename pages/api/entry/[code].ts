@@ -1,24 +1,21 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../lib/mongodb";
-
-type RaceData = {
-  code: string;
-  name_kr: string;
-  rank: number;
-  point: number;
-  race_results: number[];
-};
+import { RaceData } from "../../../lib/typeDef";
 
 export default async function handler(req: NextApiRequest, res: any) {
   try {
     const client = await clientPromise;
     const db = client.db("holocup");
-    const collection = db.collection("competitions");
-    const data = await collection.find({}).toArray();
+    const competitions = db.collection("competitions");
+    const member = db.collection("member");
+    const raceData = await competitions.find({}).toArray();
+    const memeberData = await member.findOne({
+      code: req.query.code,
+    });
 
-    const result: any[] = [];
+    const entryData: any[] = [];
 
-    data.map((rounds) => {
+    raceData.map((rounds) => {
       let round_data = {
         cup_code: rounds.code,
         cup_name: rounds.name,
@@ -31,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: any) {
           const raceDataList = value as RaceData[];
           raceDataList.map((raceData) => {
             if (raceData.code === req.query.code) {
-              result.push({
+              entryData.push({
                 race_code: key,
                 ...round_data,
                 ...raceData,
@@ -48,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: any) {
             const raceDataList = value as RaceData[];
             raceDataList.map((raceData) => {
               if (raceData.code === req.query.code) {
-                result.push({
+                entryData.push({
                   race_code: "pre_round_" + key,
                   ...round_data,
                   ...raceData,
@@ -59,6 +56,11 @@ export default async function handler(req: NextApiRequest, res: any) {
         }
       });
     });
+
+    const result = {
+      ...memeberData,
+      entry: entryData,
+    };
 
     res.status(200).json(result);
   } catch (error) {

@@ -37,7 +37,7 @@ const SideMenu: React.FC = () => {
     { title: "대회 정보", link: "/info" },
     { title: "역대 기록", link: "/records" },
     { title: "참가자 정보", link: "/participants" },
-    { title: "승부 예측", link: "/prediction" },
+    { title: "승부 예측", link: "/login" },
     { title: "버그 제보", link: "/bug" },
   ];
 
@@ -52,7 +52,7 @@ const SideMenu: React.FC = () => {
   };
 
   return (
-    <div className="w-48 bg-third-700">
+    <div className="w-48 min-w-[12rem] bg-third-700">
       {menus.map((menu, index) => (
         <MenuItem key={index} menu={menu} />
       ))}
