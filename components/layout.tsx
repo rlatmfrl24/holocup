@@ -74,7 +74,7 @@ const Layout: NextPage<{ children: ReactNode }> = ({ children }) => {
       <div className="font-noto_kr font-semibold text-center bg-gray-200">
         해당 사이트는 팬 사이트로, 홀로라이브와 아무런 관련이 없습니다. 해당
         사이트의 데이터 출처는{" "}
-        <Link href={"/"}>
+        <Link href={"/source"}>
           <span className="text-orange-600 hover:underline cursor-pointer">
             여기
           </span>
