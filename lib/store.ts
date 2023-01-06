@@ -1,4 +1,3 @@
-import { Long, Timestamp } from "mongodb";
 import { atom } from "recoil";
 import { PredictionData } from "./typeDef";
 
@@ -62,4 +61,10 @@ const newPredictionState = atom<PredictionData>({
   },
 });
 
-export { group_a, group_b, group_c, newPredictionState };
+// set api endpoint by NODE_ENV
+const apiEndpoint =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://holocup.vercel.app";
+
+export { group_a, group_b, group_c, newPredictionState, apiEndpoint };
