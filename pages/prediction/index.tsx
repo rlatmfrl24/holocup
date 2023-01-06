@@ -1,4 +1,4 @@
-import next, { NextPage } from "next";
+import { NextPage } from "next";
 import Layout from "../../components/layout";
 import { group_a, group_b, group_c, newPredictionState } from "../../lib/store";
 import Image from "next/image";
@@ -125,7 +125,7 @@ const PredictionPage: NextPage = () => {
     return (
       <button
         className="h-fit mr-2 text-xl bg-third-400 text-white py-2 px-3 rounded"
-        onClick={() => nextPage(doSomething)}
+        onClick={async () => nextPage(doSomething)}
       >
         다음
       </button>
@@ -563,7 +563,7 @@ const PredictionPage: NextPage = () => {
           </div>
 
           <NextPageButton
-            doSomething={async () => {
+            doSomething={() => {
               if (winner === "" || jako === "") {
                 alert("자코컵 예측을 완료해주세요.");
                 return false;
@@ -578,14 +578,7 @@ const PredictionPage: NextPage = () => {
                     jako: jako,
                   });
 
-                  const reqBody = JSON.stringify({
-                    ...predictionData,
-                    jako_winner: winner,
-                    jako: jako,
-                  });
-                  console.log(reqBody);
-
-                  await fetch("/api/prediction", {
+                  fetch("/api/prediction", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
@@ -598,10 +591,10 @@ const PredictionPage: NextPage = () => {
                   });
 
                   return true;
+                } else {
+                  return false;
                 }
               }
-
-              return true;
             }}
           />
         </div>
@@ -702,7 +695,7 @@ const PredictionPage: NextPage = () => {
 
   const PredictionCompletePage: NextPage = () => {
     return (
-      <div className="flex-1 flex flex-col font-noto_kr text-2xl">
+      <div className="flex-1 flex flex-col font-noto_kr text-2xl justify-center items-center">
         <p>예측 완료!</p>
         <p>로그인하셔서 예측 결과를 확인해보세요!</p>
         <Link href="/login">
