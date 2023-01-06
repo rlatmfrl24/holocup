@@ -1,11 +1,9 @@
-import { Long, Timestamp } from "mongodb";
 import { atom } from "recoil";
 import { PredictionData } from "./typeDef";
 
 const group_a = [
   "natsuiro_matsuri",
   "nekomata_okayu",
-  "shirakami_fubuki",
   "tokoyami_towa",
   "houshou_marine",
   "momosuzu_nene",
@@ -21,12 +19,11 @@ const group_b = [
   "roboco",
   "sakura_miko",
   "hosimachi_suisei",
-  "akai_haato",
   "yozora_mel",
   "nakiri_ayame",
+  "shirakami_fubuki",
   "tsunomaki_watame",
   "himemori_luna",
-  "yukihana_lamy",
   "gawr_gura",
   "kobo_kanaeru",
   "kaela_kovalskia",
@@ -64,4 +61,10 @@ const newPredictionState = atom<PredictionData>({
   },
 });
 
-export { group_a, group_b, group_c, newPredictionState };
+// set api endpoint by NODE_ENV
+const apiEndpoint =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://holocup.vercel.app";
+
+export { group_a, group_b, group_c, newPredictionState, apiEndpoint };

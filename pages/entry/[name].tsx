@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import Link from "next/link";
 import { EntryData } from "../../lib/typeDef";
+import { apiEndpoint } from "../../lib/store";
 
 type Data = {
   code: string;
@@ -23,7 +24,7 @@ type Data = {
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const code = context.params.name;
-  const res = await fetch(`http://localhost:3000/api/entry/${code}`);
+  const res = await fetch(apiEndpoint + `/api/entry/${code}`);
   const data: Data = await res.json();
 
   return { props: { data } };
