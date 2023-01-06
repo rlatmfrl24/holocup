@@ -134,13 +134,29 @@ const InfoPage = () => {
     <Layout>
       <div className="p-3 gap-3 font-noto_kr flex-1 flex overflow-x-hidden">
         <button onClick={() => paginate(-1)}>
-          <span className="material-symbols-outlined">arrow_back_ios</span>
+          <Image
+            className="w-10 h-10"
+            alt="info"
+            width={40}
+            height={40}
+            src="/icons/arrow_back_ios.svg"
+            style={{ objectFit: "contain" }}
+            draggable={false}
+          />
         </button>
         <div className="flex relative flex-1">
           <InfoBox />
         </div>
         <button onClick={() => paginate(1)}>
-          <span className="material-symbols-outlined">arrow_forward_ios</span>
+          <Image
+            className="w-10 h-10"
+            alt="info"
+            width={40}
+            height={40}
+            src="/icons/arrow_forward_ios.svg"
+            style={{ objectFit: "contain" }}
+            draggable={false}
+          />
         </button>
       </div>
     </Layout>

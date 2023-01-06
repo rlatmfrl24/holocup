@@ -7,13 +7,8 @@ import Link from "next/link";
 const Header: NextPage = () => {
   return (
     <div className="bg-third-600 text-secondary p-3 items-center flex gap-3 font-poppins font-semibold fixed w-full z-30">
-      <button>
-        <span className="material-symbols-outlined text-3xl hover:bg-third-500 p-2 rounded-full h-10 w-10 flex justify-center items-center">
-          menu
-        </span>
-      </button>
       <Link href={"/"}>
-        <div className="flex flex-1 flex-col md:flex-row md:gap-3 text-2xl md:text-4xl">
+        <div className="flex flex-1 flex-col md:flex-row md:gap-3 text-2xl md:text-4xl ml-3">
           <Image
             src={`/images/hololive.svg`}
             alt="hololive"
@@ -35,7 +30,6 @@ const SideMenu: React.FC = () => {
 
   const menus: MenuType[] = [
     { title: "대회 정보", link: "/info" },
-    { title: "역대 기록", link: "/records" },
     { title: "참가자 정보", link: "/participants" },
     { title: "승부 예측", link: "/login" },
     { title: "버그 제보", link: "/bug" },
