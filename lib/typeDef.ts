@@ -1,4 +1,8 @@
-import { Timestamp } from "mongodb";
+export type MemberType = {
+  name_kr: string;
+  code: string;
+  color: string;
+};
 
 export type RaceData = {
   code: string;

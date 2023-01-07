@@ -95,6 +95,14 @@ const PredictionPage = () => {
                   className="p-2 bg-slate-200 rounded hover:bg-slate-300 w-full"
                   type="submit"
                   onClick={async (e) => {
+                    const currentTime = new Date();
+
+                    // if currentTime is after 2023-01-07 14:00:00 block prediction
+                    if (currentTime.getTime() > 1641612800000) {
+                      alert("예측 기간이 종료되었습니다");
+                      return;
+                    }
+
                     e.preventDefault();
                     const result = await fetch("/api/login", {
                       method: "POST",
