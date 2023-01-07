@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 import { apiEndpoint, newPredictionState } from "../../lib/store";
 import Image from "next/image";
 import { GetServerSideProps, NextPage } from "next";
-import { sortByDuplicates } from "../../lib/util";
+import { getDummyResult, sortByDuplicates } from "../../lib/util";
 import { useEffect, useState } from "react";
 import { PredictionData } from "../../lib/typeDef";
 import { useRouter } from "next/router";
@@ -14,7 +14,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
 const PredictionResult = () => {
   const predictionData = useRecoilValue(newPredictionState);
-  const [totalScore, setTotalScore] = useState(0);
+  const resultData = getDummyResult();
+  // const [totalScore, setTotalScore] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,9 +25,9 @@ const PredictionResult = () => {
     }
   }, []);
 
-  //   const [totalScore, setTotalScore] = useState(
-  //     calulateScore(predictionData, resultData)
-  //   );
+  const [totalScore, setTotalScore] = useState(
+    calulateScore(predictionData, resultData)
+  );
 
   function calulateScore(prediction: PredictionData, result: PredictionData) {
     let score = 0;
@@ -193,26 +194,31 @@ const PredictionResult = () => {
             <PredictionBox
               head="우승자"
               prediction={predictionData.winner}
+              result={resultData.winner}
               score={10}
             />
             <PredictionBox
               head="2위"
               prediction={predictionData.runnerUp}
+              result={resultData.runnerUp}
               score={5}
             />
             <PredictionBox
               head="3위"
               prediction={predictionData.thirdPlace}
+              result={resultData.thirdPlace}
               score={3}
             />
             <PredictionBox
               head="자코컵 우승"
               prediction={predictionData.jako_winner}
+              result={resultData.jako_winner}
               score={7}
             />
             <PredictionBox
               head="자코컵 최하위"
               prediction={predictionData.jako}
+              result={resultData.jako}
               score={4}
             />
           </div>
@@ -220,11 +226,13 @@ const PredictionResult = () => {
             <PredictionGroupBox
               head="챔피언쉽"
               prediction={predictionData.championshipPrediction}
+              result={resultData.championshipPrediction}
               score={2}
             />
             <PredictionGroupBox
               head="자코컵"
               prediction={predictionData.jakoPrediction}
+              result={resultData.jakoPrediction}
               score={1}
             />
           </div>
