@@ -98,36 +98,38 @@ const PredictionPage = () => {
                     const currentTime = new Date();
 
                     // if currentTime is after 2023-01-07 14:00:00 block prediction
-                    if (currentTime.getTime() > 1641612800000) {
+                    if (
+                      currentTime.getTime() > Date.parse("2023-01-07 14:00:00")
+                    ) {
                       alert("예측 기간이 종료되었습니다");
                       return;
-                    }
-
-                    e.preventDefault();
-                    const result = await fetch("/api/login", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        nickname: nickname,
-                        password: password,
-                      }),
-                    });
-
-                    const checkMsg = await result.json();
-                    if (
-                      checkMsg.message === LOGIN_STATUS.SUCCESS ||
-                      checkMsg.message === LOGIN_STATUS.PWD_ERROR
-                    ) {
-                      alert("이미 존재하는 닉네임입니다");
                     } else {
-                      router.push("/prediction");
-                      setPredictionData({
-                        ...predictionData,
-                        nickname: nickname,
-                        password: password,
+                      e.preventDefault();
+                      const result = await fetch("/api/login", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          nickname: nickname,
+                          password: password,
+                        }),
                       });
+
+                      const checkMsg = await result.json();
+                      if (
+                        checkMsg.message === LOGIN_STATUS.SUCCESS ||
+                        checkMsg.message === LOGIN_STATUS.PWD_ERROR
+                      ) {
+                        alert("이미 존재하는 닉네임입니다");
+                      } else {
+                        router.push("/prediction");
+                        setPredictionData({
+                          ...predictionData,
+                          nickname: nickname,
+                          password: password,
+                        });
+                      }
                     }
                   }}
                 >
