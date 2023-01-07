@@ -22,10 +22,6 @@ const PredictionPage = () => {
             <p>승부 예측을 위한 닉네임과 비밀번호를 입력해주세요</p>
             <p>닉네임은 중첩해서 사용할 수 없습니다</p>
             <p>내가 한 예측 결과를 확인하려면 로그인해주세요</p>
-            <p>
-              새롭게 예측을 진행하고 싶으면 &apos;신규 예측&apos;을 클릭해주세요
-            </p>
-            <p>승부예측은 2023년 1월 7일 13시까지 가능합니다</p>
           </div>
           <form
             className="flex flex-col gap-3"
@@ -90,7 +86,7 @@ const PredictionPage = () => {
                 </button>
               </Link>
 
-              <Link href={"/prediction"} className="flex-1">
+              {/* <Link href={"/prediction"} className="flex-1">
                 <button
                   className="p-2 bg-slate-200 rounded hover:bg-slate-300 w-full"
                   type="submit"
@@ -98,42 +94,44 @@ const PredictionPage = () => {
                     const currentTime = new Date();
 
                     // if currentTime is after 2023-01-07 14:00:00 block prediction
-                    if (currentTime.getTime() > 1641612800000) {
+                    if (
+                      currentTime.getTime() > Date.parse("2023-01-07 14:00:00")
+                    ) {
                       alert("예측 기간이 종료되었습니다");
                       return;
-                    }
-
-                    e.preventDefault();
-                    const result = await fetch("/api/login", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        nickname: nickname,
-                        password: password,
-                      }),
-                    });
-
-                    const checkMsg = await result.json();
-                    if (
-                      checkMsg.message === LOGIN_STATUS.SUCCESS ||
-                      checkMsg.message === LOGIN_STATUS.PWD_ERROR
-                    ) {
-                      alert("이미 존재하는 닉네임입니다");
                     } else {
-                      router.push("/prediction");
-                      setPredictionData({
-                        ...predictionData,
-                        nickname: nickname,
-                        password: password,
+                      e.preventDefault();
+                      const result = await fetch("/api/login", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          nickname: nickname,
+                          password: password,
+                        }),
                       });
+
+                      const checkMsg = await result.json();
+                      if (
+                        checkMsg.message === LOGIN_STATUS.SUCCESS ||
+                        checkMsg.message === LOGIN_STATUS.PWD_ERROR
+                      ) {
+                        alert("이미 존재하는 닉네임입니다");
+                      } else {
+                        router.push("/prediction");
+                        setPredictionData({
+                          ...predictionData,
+                          nickname: nickname,
+                          password: password,
+                        });
+                      }
                     }
                   }}
                 >
                   신규 예측
                 </button>
-              </Link>
+              </Link> */}
             </div>
           </form>
         </div>
