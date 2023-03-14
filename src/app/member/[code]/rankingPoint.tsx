@@ -54,7 +54,7 @@ const RankingPoint: NextPage<{
         >
           <p>랭킹포인트는 각 라운드별 획득한 포인트를</p>
           <p>각 라운드 타입과 최근 기록 여부 등을</p>
-          가중치로 조정하여 계산한 포인트입니다.
+          <p>가중치로 조정하여 계산한 포인트입니다.</p>
         </div>
       )}
       <span className="text-3xl">
