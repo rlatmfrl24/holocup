@@ -16,6 +16,8 @@ function makeRankBoardList(roundData: RoundDataType, memberData: MemberType[]) {
       name: detail.code,
       point: detail.point,
       data: member,
+      race_data: roundData.details?.find((detail) => detail.code === member?.id)
+        ?.race_results,
     };
   });
 
@@ -28,7 +30,7 @@ const RoundRank: NextPage<{ memberData: MemberType[] }> = ({ memberData }) => {
     (state) => state.setEmphasizeMemberCode
   );
   const [rankBoardList, setRankBoardList] = useState<
-    { rank: number; name: string; point: number; data: any }[]
+    { rank: number; name: string; point: number; data: any; race_data: any }[]
   >([]);
 
   useEffect(() => {
@@ -51,7 +53,20 @@ const RoundRank: NextPage<{ memberData: MemberType[] }> = ({ memberData }) => {
 
   return (
     <div className="shadow px-5 py-3 bg-white rounded w-1/3">
-      <h2 className="font-poppins text-lg font-medium">Round Result</h2>
+      <h2
+        className="font-poppins text-lg font-medium cursor-pointer "
+        onClick={() => {
+          // make csv with tab from rankBoardList
+          const csv_data = rankBoardList?.map((rankBoard) => {
+            return (
+              rankBoard.name + "\t" + rankBoard.race_data?.join("\t") + "\n"
+            );
+          });
+          navigator.clipboard.writeText(csv_data?.join("") ?? "");
+        }}
+      >
+        Round Result
+      </h2>
       <ul>
         <li className="flex items-center gap-3 font-noto_kr py-2 border-b text-xs">
           <span className="w-8 text-center">Rank</span>
@@ -67,6 +82,11 @@ const RoundRank: NextPage<{ memberData: MemberType[] }> = ({ memberData }) => {
             }}
             onMouseLeave={() => {
               setEmphasizeMember("");
+            }}
+            onClick={() => {
+              navigator.clipboard.writeText(
+                rankBoard.race_data?.join("\t") ?? ""
+              );
             }}
           >
             <span className="w-8 text-center">{rankBoard.rank}</span>
